@@ -6,6 +6,7 @@ find_package(Qt4 REQUIRED)
 find_package(CTK REQUIRED)
 
 include(${QT_USE_FILE})
+include(${CTK_USE_FILE})
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
@@ -21,9 +22,10 @@ endmacro()
 
 #> Create a list of available plug-ins and make them known to the build system
 set(plugins
-  Plugins/org.mydomain.serviceeventlistener:ON
+  Plugins/org.mydomain.testplugin:ON
 )
 
+message(STATUS "running ctkMacroSetupPlugins")
 ctkMacroSetupPlugins(${plugins})
 #>
 

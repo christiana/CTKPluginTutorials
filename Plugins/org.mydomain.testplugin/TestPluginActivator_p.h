@@ -19,12 +19,13 @@
 =============================================================================*/
 
 
-#ifndef SERVICEEVENTLISTENERACTIVATOR_P_H
-#define SERVICEEVENTLISTENERACTIVATOR_P_H
+#ifndef TestPluginActivator_P_H
+#define TestPluginActivator_P_H
 
 #include <ctkPluginActivator.h>
+class TestService;
 
-class ServiceEventListenerActivator :
+class TestPluginActivator :
   public QObject, public ctkPluginActivator
 {
   Q_OBJECT
@@ -32,23 +33,24 @@ class ServiceEventListenerActivator :
 
 public:
 
-  ServiceEventListenerActivator();
-  ~ServiceEventListenerActivator();
+  TestPluginActivator();
+  ~TestPluginActivator();
 
   void start(ctkPluginContext* context);
   void stop(ctkPluginContext* context);
 
-  static ServiceEventListenerActivator* getInstance();
+  static TestPluginActivator* getInstance();
 
   ctkPluginContext* getPluginContext() const;
 
 
 private:
 
-  static ServiceEventListenerActivator* instance;
+  static TestPluginActivator* instance;
   ctkPluginContext* context;
 
+  TestService* mTestService;
 
-}; // ServiceEventListenerActivator
+}; // TestPluginActivator
 
-#endif // SERVICEEVENTLISTENERACTIVATOR_P_H
+#endif // TestPluginActivator_P_H
