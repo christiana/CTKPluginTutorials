@@ -5,6 +5,8 @@
  *      Author: christiana
  */
 
+#include "Backend.h"
+
 #include "TestServiceImpl.h"
 
 #include <iostream>
@@ -21,5 +23,8 @@ TestServiceImpl::~TestServiceImpl()
 QString TestServiceImpl::getCustomString() const
 {
 	std::cout << "TestServiceImpl::getCustomString() called" << std::endl;
+
+	Backend().foo();
+
 	return "TestServiceImpl::getCustomString() content";
 }

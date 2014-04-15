@@ -26,6 +26,7 @@ class TestStandalone
 {
 public:
 	void printStuff();
+	void printFromBackend();
 };
 
-#endif /* CATESTSERVICE_H_ */
+#endif /* TESTSERVICE_H_ */

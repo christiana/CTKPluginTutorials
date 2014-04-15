@@ -1,9 +1,8 @@
 project(org_mydomain_testplugin)
 
-#message(STATUS "CTK_SOURCE_DIR " ${CTK_SOURCE_DIR})
-#set(CMAKE_MODULE_PATH "${CTK_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
+set(PLUGIN_export_directive "${PROJECT_NAME}_EXPORT")
 
-set(PLUGIN_export_directive "org_mydomain_testplugin_EXPORT")
+include_directories(${CTKPluginTutorials_SOURCE_DIR}/Libs/Backend)
 
 set(PLUGIN_SRCS
   TestPluginActivator.cpp
@@ -26,11 +25,11 @@ set(PLUGIN_UI_FORMS
 set(PLUGIN_resources
 )
 
-message(STATUS "ctkFunctionGetTargetLibraries PRE target libs pre: " ${PLUGIN_target_libraries})
+#message(STATUS "ctkFunctionGetTargetLibraries PRE target libs pre: " ${PLUGIN_target_libraries})
 #Compute the plugin dependencies
 ctkFunctionGetTargetLibraries(PLUGIN_target_libraries)
-#set(PLUGIN_target_libraries ${PLUGIN_target_libraries} org_commontk_plugingenerator_core) no effect
-message(STATUS "ctkFunctionGetTargetLibraries POST target libs: " ${PLUGIN_target_libraries})
+set(PLUGIN_target_libraries ${PLUGIN_target_libraries} CTKPluginTutorialLibBackend)
+message(STATUS "Target libs for [${PROJECT_NAME}]: " ${PLUGIN_target_libraries})
 
 
 ctkMacroBuildPlugin(

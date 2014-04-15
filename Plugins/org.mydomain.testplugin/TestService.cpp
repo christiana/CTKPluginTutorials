@@ -16,3 +16,9 @@ void TestStandalone::printStuff()
 {
 	std::cout << "TestStandalone::printStuff()" << std::endl;
 }
+
+void TestStandalone::printFromBackend()
+{
+	std::cout << "TestStandalone::printFromBackend()" << std::endl;
+}
+
