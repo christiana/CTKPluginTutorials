@@ -21,12 +21,17 @@
 #include <ctkConfig.h>
 #include <iostream>
 
+#include "PluginFrameworkManager.h"
+
 class PluginManager
 {
 public:
-	QSharedPointer<ctkPluginFramework> getInitializedFramework();
+	PluginManager();
+//	QSharedPointer<ctkPluginFramework> getInitializedFramework();
 	void installPlugins();
-	void installPluginFromFilename(QString filename);
+	void installPlugin(QString name);
+
+//	void installPluginFromFilename(QString filename);
 
 	ctkPluginContext* getPluginContext();
 	QSharedPointer<ctkPlugin> getPluginFromSymbolicName(QString symbolicName);
@@ -60,10 +65,10 @@ public:
 		std::cout << "specificService: " << specificService << std::endl;
 	}
 
-
 private:
-	ctkPluginFrameworkFactory mFrameworkFactory;
-	QSharedPointer<ctkPluginFramework> mFramework;
+//	ctkPluginFrameworkFactory mFrameworkFactory;
+//	QSharedPointer<ctkPluginFramework> mFramework;
+	PluginFrameworkManagerPtr mManager;
 };
 
 

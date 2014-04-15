@@ -15,6 +15,8 @@ include_directories(${my_includes})
 
 set(KIT_SRCS
   Backend.cpp
+  PluginFrameworkManager.cpp
+  PluginFrameworkManager.h
 )
 
 # Headers that should run through moc

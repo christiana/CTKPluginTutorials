@@ -85,10 +85,17 @@ int main(int argc, char** argv)
 	app.setApplicationName("UseCTK_CA_Test");
 
 	PluginManager pluginManager;
-	pluginManager.getInitializedFramework();
-	pluginManager.installPlugins();
+//	pluginManager.getInitializedFramework();
 
-//	investigateTestPlugin(pluginManager);
+	qDebug() << "=== start installing+starting plugins ===";
+	pluginManager.installPlugin("org.mydomain.backend.impl");
+	pluginManager.installPlugin("org.mydomain.testplugin");
+	pluginManager.installPlugin("org.commontk.plugingenerator.core");
+	qDebug() << "=== completed installing+starting plugins ===";
+
+//	pluginManager.installPlugins();
+
+	investigateTestPlugin(pluginManager);
 
 	investigateBackendInterface(pluginManager);
 
