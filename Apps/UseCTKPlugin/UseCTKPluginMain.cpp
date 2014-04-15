@@ -16,19 +16,40 @@
 #include "ctkPluginGeneratorCodeModel.h"
 
 #include "CTKFrameworkWrapper.h"
+#include "Backend.h"
 
-int main(int argc, char** argv)
+void investigateBackendInterface(PluginManager& pluginManager)
 {
-	QCoreApplication app(argc, argv);
+	ctkPluginContext* context = pluginManager.getPluginContext();
+	qDebug() << "=== dump info for framework ";
+	  QList<ctkServiceReference> serviceRefs = context->getServiceReferences("BackendInterface");
+	  QListIterator<ctkServiceReference> it(serviceRefs);
+	  while (it.hasNext())
+	  {
+		ctkServiceReference ref(it.next());
+		pluginManager.dumpInfoForService(ref);
 
-	app.setOrganizationName("CustusX");
-	app.setOrganizationDomain("custusx.org");
-	app.setApplicationName("UseCTK_CA_Test");
+		BackendInterface* bif = context->getService<BackendInterface>(ref);
+		std::cout << "bif: " << bif << std::endl;
+		if (bif)
+			qDebug() << bif->getBackendString();
+		qDebug() << "=== end of this service ===";
 
-	PluginManager pluginManager;
-	pluginManager.getInitializedFramework();
-	pluginManager.installPlugins();
 
+	  }
+	qDebug() << "=== end dump info for framework ";
+
+
+
+
+//	QSharedPointer<ctkPlugin> plugin = pluginManager.getPluginFromSymbolicName("org.mydomain.backend.impl");
+//	QSharedPointer<ctkPlugin> plugin = pluginManager.getPluginFromSymbolicName("org.mydomain.testplugin");
+//	pluginManager.dumpInfoForPlugin(plugin);
+}
+
+
+void investigateTestPlugin(PluginManager& pluginManager)
+{
 	QSharedPointer<ctkPlugin> plugin = pluginManager.getPluginFromSymbolicName("org.mydomain.testplugin");
 	pluginManager.dumpInfoForPlugin(plugin);
 
@@ -53,6 +74,23 @@ int main(int argc, char** argv)
 
 	TestStandalone sl;
 	sl.printStuff();
+}
+
+int main(int argc, char** argv)
+{
+	QCoreApplication app(argc, argv);
+
+	app.setOrganizationName("CustusX");
+	app.setOrganizationDomain("custusx.org");
+	app.setApplicationName("UseCTK_CA_Test");
+
+	PluginManager pluginManager;
+	pluginManager.getInitializedFramework();
+	pluginManager.installPlugins();
+
+//	investigateTestPlugin(pluginManager);
+
+	investigateBackendInterface(pluginManager);
 
 	//	return app.exec();
 }

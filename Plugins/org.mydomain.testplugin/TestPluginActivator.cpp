@@ -23,6 +23,7 @@
 #include <QtPlugin>
 #include <iostream>
 #include "TestServiceImpl.h"
+#include "BackendInterfaceImpl.h"
 
 TestPluginActivator* TestPluginActivator::instance = 0;
 
@@ -51,6 +52,9 @@ void TestPluginActivator::start(ctkPluginContext* context)
 //  context->registerService("TestService", mTestService);
   context->registerService(QStringList("TestService"), mTestService);
 
+  mBackendInterface = new BackendInterfaceImpl();
+  std::cout << "create BackendInterfaceImpl object " << mBackendInterface << std::endl;
+  context->registerService(QStringList("BackendInterface"), mBackendInterface);
 }
 
 void TestPluginActivator::stop(ctkPluginContext* context)

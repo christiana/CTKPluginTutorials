@@ -12,6 +12,7 @@ set(my_includes
   ${CTKPluginTutorials_BINARY_DIR}/Plugins/org.mydomain.testplugin
   ${CTKPluginTutorials_SOURCE_DIR}/Plugins/org.mydomain.testplugin
   ${org_commontk_plugingenerator_core_INCLUDE_DIRS}
+  ${CTKPluginTutorials_SOURCE_DIR}/Libs/Backend
 )
 #>
 

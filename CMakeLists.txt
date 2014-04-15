@@ -23,6 +23,7 @@ endmacro()
 #> Create a list of available plug-ins and make them known to the build system
 set(plugins
   Plugins/org.mydomain.testplugin:ON
+  Plugins/org.mydomain.backend.impl:ON
 )
 
 message(STATUS "running ctkMacroSetupPlugins")

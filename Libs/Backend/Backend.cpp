@@ -12,3 +12,8 @@ void Backend::foo()
 {
 	std::cout << "Backend::foo() called" << std::endl;
 }
+
+BackendInterface::~BackendInterface()
+{
+
+}

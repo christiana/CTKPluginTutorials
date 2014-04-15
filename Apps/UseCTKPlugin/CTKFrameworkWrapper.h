@@ -38,6 +38,11 @@ public:
 	template <class T>
 	void investigateService(ctkServiceReference ref)
 	{
+		if (!ref)
+		{
+			qDebug() << "service not valid";
+			return;
+		}
 		qDebug() << "Investigating service " << ref.getProperty(ctkPluginConstants::SERVICE_ID).toString();
 		this->dumpInfoForService(ref);
 

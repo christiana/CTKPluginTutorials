@@ -14,12 +14,12 @@ include_directories(${my_includes})
 
 
 set(KIT_SRCS
-  Backend.h
   Backend.cpp
 )
 
 # Headers that should run through moc
 set(KIT_MOC_SRCS
+  Backend.h
 )
 
 # UI files
@@ -30,6 +30,7 @@ set(KIT_UI_FORMS
 set(KIT_resources
 )
 
+QT4_WRAP_CPP( KIT_SRCS ${KIT_MOC_SRCS} )
 
 # Target libraries - See CMake/ctkFunctionGetTargetLibraries.cmake
 # The following macro will read the target libraries from the file 'target_libraries.cmake'

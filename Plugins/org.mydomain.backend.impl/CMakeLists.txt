@@ -1,22 +1,18 @@
-project(org_mydomain_testplugin)
+project(org_mydomain_backend_impl)
 
 set(PLUGIN_export_directive "${PROJECT_NAME}_EXPORT")
 
 include_directories(${CTKPluginTutorials_SOURCE_DIR}/Libs/Backend)
 
 set(PLUGIN_SRCS
-  TestPluginActivator.cpp
-  TestServiceImpl.cpp
-  TestService.cpp
-  BackendInterfaceImpl.cpp
+  BackendImplActivator.cpp
+  BackendInterfaceImpl2.cpp
 )
 
 # Files which should be processed by Qts moc
 set(PLUGIN_MOC_SRCS
-  TestPluginActivator_p.h
-  TestService.h
-  TestServiceImpl.h
-  BackendInterfaceImpl.h
+  BackendImplActivator.h
+  BackendInterfaceImpl2.h
 )
 
 # Qt Designer files which should be processed by Qts uic

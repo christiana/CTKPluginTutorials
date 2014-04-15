@@ -37,7 +37,7 @@ void PluginManager::installPlugins()
 	pluginDirs << CTK_PLUGIN_DIR;
 #endif
 
-//		pluginDirs.clear();
+		pluginDirs.clear();
 	pluginDirs << "/Users/christiana/dev/working/CTKPluginTutorials/build_Debug/bin/plugins";
 
 	std::cout << "pluginddirs: " << pluginDirs.join(", ").toStdString() << std::endl;

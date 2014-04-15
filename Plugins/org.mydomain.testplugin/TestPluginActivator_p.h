@@ -24,6 +24,7 @@
 
 #include <ctkPluginActivator.h>
 class TestService;
+class BackendInterface;
 
 class TestPluginActivator :
   public QObject, public ctkPluginActivator
@@ -50,6 +51,7 @@ private:
   ctkPluginContext* context;
 
   TestService* mTestService;
+  BackendInterface* mBackendInterface;
 
 }; // TestPluginActivator
 

@@ -1,3 +1,28 @@
-This project contains tutorial code accompaning the CommonTK Wiki tutorials.
+This is a fork/rewrite of the CTK tutorials (git@github.com:saschazelzer/CTKPluginTutorials.git). 
+I has evolved during my own attempt to learn the basics of CTK, and is not intended as a general tutorial.
+
+However, it can serve as a starting point while the CTK basic tutorials are incomplete. Start with the commontk.org wiki,
+then move here when you find that stuff are missing.
 
 It depends on github.com/commontk/CTK
+
+Use Cases being tested in this project:
+
+* Install and connect to a service in a vanilla CTK plugin
+	- Plugin: org.commontk.plugingenerator.core
+	- Service: ctkPluginGeneratorCodeModel
+	- App: UseCTKPlugin
+* Install a CTK plugin (org.mydomain.testplugin)
+* Connect to a service (service: TestService in plugin: org.mydomain.testplugin)
+* Define an interface in a library, then implement the interface in a plugin, then use it in an app.
+	- Plugin: org.mydomain.testplugin
+	- Lib: Backend
+	- Service: BackendInterface
+	- Service implementation: BackendInterfaceImpl
+	- App: UseCTKPlugin
+* Define a second implementation of the same service in a second plugin, then use both services in the app. 
+The second plugin does not link to the app at compile-time.
+	- Second Plugin: org.mydomain.backend.impl
+	- Service: BackendInterface
+	- Service implementation: BackendInterfaceImpl2
+	
