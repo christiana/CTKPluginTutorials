@@ -9,9 +9,13 @@
 #define PLUGINFRAMEWORKMANAGER_H_
 
 #include <QString>
+#include <QObject>
 
 #include "ctkPlugin.h"
 #include "ctkPluginFramework_global.h"
+
+typedef QSharedPointer<ctkPlugin> ctkPluginPtr;
+typedef std::pair<QString,ctkPluginPtr> PluginData;
 
 class ctkPluginFramework;
 class ctkPluginFrameworkFactory;
@@ -22,8 +26,9 @@ typedef QSharedPointer<class PluginFrameworkManager> PluginFrameworkManagerPtr;
  * This is a customized version of the ctk singleton ctkPluginFrameworkLauncher.
  *
  */
-class PluginFrameworkManager
+class PluginFrameworkManager : public QObject
 {
+	Q_OBJECT
 public:
 	static PluginFrameworkManagerPtr create() { return PluginFrameworkManagerPtr(new PluginFrameworkManager()); }
 
@@ -31,6 +36,7 @@ public:
 	~PluginFrameworkManager();
 
 	void install(const QString& symbolicName);
+	void uninstall(const QString& symbolicName);
 	bool start(const QString& symbolicName, ctkPlugin::StartOptions options = ctkPlugin::START_ACTIVATION_POLICY);
 	bool stop(const QString& symbolicName, ctkPlugin::StopOptions options = 0);
 	bool start();
@@ -40,9 +46,13 @@ public:
 	QSharedPointer<ctkPluginFramework> getPluginFramework();
 
 	void addSearchPath(const QString& searchPath);
+	void setSearchPaths(const QStringList& searchPath);
 	QStringList getSearchPaths() const;
 	QStringList getPluginSymbolicNames();
 	QSharedPointer<ctkPlugin> getInstalledPluginFromSymbolicName(QString symbolicName);
+
+signals:
+	void pluginPoolChanged();
 
 private:
 	QString getPluginPath(const QString& symbolicName);

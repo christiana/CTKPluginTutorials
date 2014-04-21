@@ -36,6 +36,14 @@ void PluginFrameworkManager::addSearchPath(const QString& searchPath)
 	QApplication::addLibraryPath(searchPath);
 }
 
+void PluginFrameworkManager::setSearchPaths(const QStringList& searchPath)
+{
+	mPluginSearchPaths = searchPath;
+	for (int i=0; i<searchPath.size(); ++i)
+		QApplication::addLibraryPath(searchPath[i]);
+	emit pluginPoolChanged();
+}
+
 QStringList PluginFrameworkManager::getSearchPaths() const
 {
 	return mPluginSearchPaths;
@@ -116,6 +124,56 @@ void PluginFrameworkManager::install(const QString& symbolicName)
 	{
 		qWarning() << "Failed to install plugin:" << symbolicName << ", " << exc;
 	}
+}
+
+bool PluginFrameworkManager::start()
+{
+	this->startFramework();
+	return this->frameworkStarted();
+}
+
+bool PluginFrameworkManager::stop()
+{
+	ctkPluginContext* pc = this->getPluginContext();
+    // stop the framework
+    QSharedPointer<ctkPluginFramework> fw = qSharedPointerCast<ctkPluginFramework>(pc->getPlugin(0));
+    try
+    {
+      fw->stop();
+      ctkPluginFrameworkEvent fe = fw->waitForStop(5000);
+      if (fe.getType() == ctkPluginFrameworkEvent::FRAMEWORK_WAIT_TIMEDOUT)
+      {
+        qWarning() << "Stopping the plugin framework timed out";
+        return false;
+      }
+    }
+    catch (const ctkRuntimeException& e)
+    {
+      qWarning() << "Stopping the plugin framework failed: " << e;
+      return false;
+    }
+
+	return !this->frameworkStarted();
+}
+
+void PluginFrameworkManager::uninstall(const QString& symbolicName)
+{
+	QString pluginPath = getPluginPath(symbolicName);
+	if (pluginPath.isEmpty())
+		return;
+
+	try
+	{
+		ctkPluginContext* pc = this->getPluginContext();
+		pc->installPlugin(QUrl::fromLocalFile(pluginPath))->uninstall();
+	}
+	catch (const ctkPluginException& exc)
+	{
+		qWarning() << "Failed to uninstall plugin:" << symbolicName << ", " << exc;
+		return;
+	}
+
+	return;
 }
 
 bool PluginFrameworkManager::start(const QString& symbolicName, ctkPlugin::StartOptions options)
@@ -239,7 +297,9 @@ QStringList PluginFrameworkManager::getPluginSymbolicNames(const QString& search
 		QString fileBaseName = fileInfo.baseName();
 		if (fileBaseName.startsWith("lib"))
 			fileBaseName = fileBaseName.mid(3);
-		result << fileBaseName.replace("_", ".");
+		QString name = fileBaseName.replace("_", ".");
+		if (name.contains(".")) // heuristic check for plugin-ish name
+			result << name;
 	}
 
 	return result;

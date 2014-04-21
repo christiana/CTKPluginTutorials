@@ -1,5 +1,6 @@
 set(APPS
   UseCTKPlugin
+  PluginBrowser
 )
 
 foreach(app ${APPS})
